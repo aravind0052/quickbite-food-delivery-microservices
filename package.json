@@ -1,0 +1,30 @@
+{
+  "name": "quickbite-root",
+  "version": "1.0.0",
+  "description": "QuickBite – Microservices-Based Food Delivery Platform with Centralized API Gateway",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -p \"[{name}]\" -n \"GATEWAY,AUTH,USER,RESTAURANT,ORDER,FRONTEND\" -c \"magenta,blue,green,yellow,cyan,red\" \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:user\" \"npm run dev:restaurant\" \"npm run dev:order\" \"npm run dev:frontend\"",
+    "dev:backend": "concurrently -k -p \"[{name}]\" -n \"GATEWAY,AUTH,USER,RESTAURANT,ORDER\" -c \"magenta,blue,green,yellow,cyan\" \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:user\" \"npm run dev:restaurant\" \"npm run dev:order\"",
+    "dev:gateway": "npm --prefix gateway run dev",
+    "dev:auth": "npm --prefix services/auth-service run dev",
+    "dev:user": "npm --prefix services/user-service run dev",
+    "dev:restaurant": "npm --prefix services/restaurant-service run dev",
+    "dev:order": "npm --prefix services/order-service run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:all": "npm --prefix gateway run build && npm --prefix services/auth-service run build && npm --prefix services/user-service run build && npm --prefix services/restaurant-service run build && npm --prefix services/order-service run build && npm --prefix frontend run build",
+    "test:load": "npm --prefix load-tester run test:load",
+    "test:jwt": "npm --prefix load-tester run test:jwt",
+    "test:rate-limit": "npm --prefix load-tester run test:rate-limit",
+    "db:setup": "tsx database/setup-db.ts",
+    "db:seed": "tsx database/seed.ts"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
+    "concurrently": "^9.1.2",
+    "dotenv": "^18.0.7",
+    "mysql2": "^3.24.5",
+    "tsx": "^4.23.15"
+  }
+}
